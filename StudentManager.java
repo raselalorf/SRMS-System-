@@ -1,8 +1,17 @@
 import java.util.ArrayList;
 
 public class StudentManager {
+// Changed initialization. The list will be populated by the file handler now.
 
-    private ArrayList<Student> students = new ArrayList<>();
+    private ArrayList<Student> students; 
+}
+    // Modified the constructor to load data on startup.
+
+    public StudentManager() {
+
+        // Load existing records when the manager is created. If the file is not found, an empty list is returned.
+
+        this.students = StudentFileHandler.loadRecords();
 
     // Add student
     public void addStudent(Student s) {
@@ -11,6 +20,8 @@ public class StudentManager {
                 System.out.println("Student already exists!");
             } else {
                 students.add(s);
+                // Save the changes to the file immediately after adding
+                StudentFileHandler.saveRecords(students); 
                 System.out.println("Student added successfully.");
             }
         } else {
@@ -23,6 +34,8 @@ public class StudentManager {
         Student s = findById(sid);
         if (s != null) {
             students.remove(s);
+            // Save the changes to the file immediately after removing
+            StudentFileHandler.saveRecords(students); 
             System.out.println("Student removed successfully.");
         } else {
             System.out.println("Student not found.");
@@ -52,6 +65,8 @@ public class StudentManager {
             s.setGpa(newGpa);
             s.setYear(newYear);
 
+// Save the changes to the file immediately after updating
+            StudentFileHandler.saveRecords(students); 
             System.out.println("Student updated successfully.");
         } else {
             System.out.println("Student not found!");
