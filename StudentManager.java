@@ -18,7 +18,6 @@ public class StudentManager {
                 System.out.println("Student already exists!");
             } else {
                 students.add(s);
-                StudentFileHandler.saveRecords(students);
                 System.out.println("Student added successfully.");
             }
         } else {
@@ -31,7 +30,6 @@ public class StudentManager {
         Student s = findById(sid);
         if (s != null) {
             students.remove(s);
-            StudentFileHandler.saveRecords(students);
             System.out.println("Student removed successfully.");
         } else {
             System.out.println("Student not found.");
@@ -60,8 +58,6 @@ public class StudentManager {
             s.setMajor(newMajor);
             s.setGpa(newGpa);
             s.setYear(newYear);
-
-            StudentFileHandler.saveRecords(students);
             System.out.println("Student updated successfully.");
         } else {
             System.out.println("Student not found!");
