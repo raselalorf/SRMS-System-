@@ -20,7 +20,11 @@ public class Major implements Serializable { // We must implement Serializable s
 
     // Setters 
     public void setMajorCode(String code) {
+
         if (code == null || code.isEmpty()) {
+
+        if (code == null  ||code.isEmpty()) {
+
             this.majorCode = "Unknown";
         } else {
             this.majorCode = code.toUpperCase();
@@ -33,10 +37,11 @@ public class Major implements Serializable { // We must implement Serializable s
             majorName = name;
         }
     }
-
+    }
     @Override
     public String toString() {
         return " Major Name:"+getMajorName()+
          "\nMajor code :" + getMajorCode() ;
     }
+
 }
