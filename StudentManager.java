@@ -104,10 +104,10 @@ public class StudentManager {
 
     // Validate student data
     private boolean validateStudent(Student s) {
-        if (s.getStudentId() < 100000  s.getStudentId() > 999999) return false;
-        if (s.getName() == null  s.getName().isEmpty()) return false;
-        if (s.getGpa() < 0  s.getGpa() > 4) return false;
-        if (s.getMajor() == null  s.getMajor().getMajorName().isEmpty()) return false;
+        if (s.getStudentId() < 100000 || s.getStudentId() > 999999) return false;
+        if (s.getName() == null || s.getName().isEmpty()) return false;
+        if (s.getGpa() < 0 || s.getGpa() > 4) return false;
+        if (s.getMajor() == null || s.getMajor().getMajorName().isEmpty()) return false;
         if (s.getYear() == null || s.getYear().isEmpty()) return false;
 
         return true;
