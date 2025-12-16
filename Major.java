@@ -20,14 +20,14 @@ public class Major implements Serializable { // We must implement Serializable s
 
     // Setters 
     public void setMajorCode(String code) {
-        if (code == null  code.isEmpty()) {
+        if (code == null  ||code.isEmpty()) {
             this.majorCode = "Unknown";
         } else {
             this.majorCode = code.toUpperCase();
         }
     }
     public void setMajorName(String name) {
-        if (name == null  name.isEmpty()) {
+        if (name == null || name.isEmpty()) {
             majorName = "Unknown Major";
         } else {
             majorName = name;

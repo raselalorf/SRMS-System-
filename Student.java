@@ -1,7 +1,7 @@
-import java.io.Serializable; // Necessary import for the Serializable interface
+ // Necessary import for the Serializable interface
 
 // Student now extends Person and implements Serializable 
- public class Student extends Person implements Serializable { // Implementing Serializable allows Student objects to be saved to file
+ public class Student extends Person  { // Implementing Serializable allows Student objects to be saved to file
    private int  studentId; 
    private Major major;
    private double gpa;
