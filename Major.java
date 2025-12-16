@@ -1,19 +1,15 @@
+import java.io.Serializable;
 
-import java.io.Serializable; // Necessary import for the Serializable interface
-public class Major {
+public class Major implements Serializable {
 
+    private String majorCode;
+    private String majorName;
 
-public class Major implements Serializable { // We must implement Serializable so Major objects can be saved to file
-
-    private String majorCode; 
-    private String majorName; 
-    // Constructor
     public Major(String code, String name) {
         setMajorCode(code);
         setMajorName(name);
     }
 
-    // Getters
     public String getMajorCode() {
         return majorCode;
     }
@@ -22,24 +18,16 @@ public class Major implements Serializable { // We must implement Serializable s
         return majorName;
     }
 
-    // Setters 
     public void setMajorCode(String code) {
-        if (code == null  ||code.isEmpty()) {
-       if (code == null || code.isEmpty()) {
-            this.majorCode = "Unknown";
+        if (code == null || code.isEmpty()) {
+            majorCode = "UNK";
         } else {
-            this.majorCode = code.toUpperCase();
+            majorCode = code.toUpperCase();
         }
-    }}
-
+    }
 
     public void setMajorName(String name) {
-        if (name == null||  name.isEmpty()) {
-
-            
-    public void setMajorName(String name) {
-       if (name == null || name.isEmpty()) {
-
+        if (name == null || name.isEmpty()) {
             majorName = "Unknown Major";
         } else {
             majorName = name;
@@ -48,7 +36,6 @@ public class Major implements Serializable { // We must implement Serializable s
 
     @Override
     public String toString() {
-        return " Major Name:"+getMajorName()+
-         "\nMajor code :" + getMajorCode() ;
+        return majorName + " (" + majorCode + ")";
     }
 }

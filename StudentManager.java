@@ -1,33 +1,27 @@
 import java.util.ArrayList;
 
 public class StudentManager {
+// Changed initialization. The list will be populated by the file handler now.
 
-    private ArrayList<Student> students = new ArrayList<>();
+    private ArrayList<Student> students; 
+
+    // Modified the constructor to load data on startup.
+
+    public StudentManager() {
+
+        // Load existing records when the manager is created. If the file is not found, an empty list is returned.
+
+        this.students = StudentFileHandler.loadRecords();}
 
     // Add student
-
-    // قائمة الطلاب
-    private ArrayList<Student> students;
-
-    // Constructor لتحميل البيانات عند إنشاء الكلاس
-    public StudentManager() {
-        // تحميل السجلات من الملف، إذا الملف غير موجود يتم إنشاء قائمة فارغة
-        this.students = StudentFileHandler.loadRecords();
-    }
-
-    // إضافة طالب
-
     public void addStudent(Student s) {
         if (validateStudent(s)) {
             if (isStudentExists(s.getStudentId())) {
                 System.out.println("Student already exists!");
             } else {
                 students.add(s);
-
-
-                // حفظ التغييرات مباشرة بعد الإضافة
-                StudentFileHandler.saveRecords(students);
-
+                // Save the changes to the file immediately after adding
+                StudentFileHandler.saveRecords(students); 
                 System.out.println("Student added successfully.");
             }
         } else {
@@ -35,41 +29,30 @@ public class StudentManager {
         }
     }
 
-
     // Remove student by ID
-
-    // إزالة طالب حسب ID
-
     public void removeStudent(int sid) {
         Student s = findById(sid);
         if (s != null) {
             students.remove(s);
-            StudentFileHandler.saveRecords(students);
-
+            // Save the changes to the file immediately after removing
+            StudentFileHandler.saveRecords(students); 
             System.out.println("Student removed successfully.");
         } else {
             System.out.println("Student not found.");
         }
     }
 
-
     // Find student by ID
-
-    // البحث عن طالب حسب ID
-
     public Student findById(int sid) {
         for (Student s : students) {
             if (s.getStudentId() == sid) {
                 return s;
             }
         }
-        return null;}
+        return null;
+    }
+
     // Update student information
-    public void updateStudent(int sid, String newName, int newAge, int newNationalId,
-                              Major newMajor, double newGpa, String newYear) {
-
-
-    // تحديث معلومات طالب
     public void updateStudent(int sid, String newName, int newAge, int newNationalId,
                               Major newMajor, double newGpa, String newYear) {
 
@@ -82,17 +65,15 @@ public class StudentManager {
             s.setGpa(newGpa);
             s.setYear(newYear);
 
-            StudentFileHandler.saveRecords(students);
+// Save the changes to the file immediately after updating
+            StudentFileHandler.saveRecords(students); 
             System.out.println("Student updated successfully.");
         } else {
             System.out.println("Student not found!");
         }
     }
 
-
     // Get students by year
-
-    // الحصول على الطلاب حسب السنة
     public ArrayList<Student> getByYear(String y) {
         ArrayList<Student> result = new ArrayList<>();
         for (Student s : students) {
@@ -103,11 +84,7 @@ public class StudentManager {
         return result;
     }
 
-
     // Get students by major
-
-    // الحصول على الطلاب حسب التخصص
-
     public ArrayList<Student> getByMajor(Major m) {
         ArrayList<Student> result = new ArrayList<>();
         for (Student s : students) {
@@ -118,28 +95,17 @@ public class StudentManager {
         return result;
     }
 
-
     // Check if student exists
-
-    // التحقق من وجود الطالب
-
     public boolean isStudentExists(int sid) {
         return findById(sid) != null;
     }
 
-
     // Count students
-
-    // عدد الطلاب
-
     public int countStudent() {
         return students.size();
     }
 
-
     // Print all students
-
-    // طباعة جميع الطلاب
     public void printAllStudent() {
         if (students.isEmpty()) {
             System.out.println("No students found!");
@@ -151,46 +117,14 @@ public class StudentManager {
         }
     }
 
-
     // Validate student data
     private boolean validateStudent(Student s) {
-        if (s.getStudentId() < 100000 || s.getStudentId() > 999999) return false;
-        if (s.getName() == null||  s.getName().isEmpty()) return false;
+        if (s.getStudentId() < 100000 ||s.getStudentId() > 999999) return false;
+        if (s.getName() == null ||s.getName().isEmpty()) return false;
         if (s.getGpa() < 0 || s.getGpa() > 4) return false;
         if (s.getMajor() == null || s.getMajor().getMajorName().isEmpty()) return false;
         if (s.getYear() == null || s.getYear().isEmpty()) return false;
 
         return true;
     }
-    // التحقق من صحة بيانات الطالب
-    private boolean validateStudent(Student s) {
-        if (s.getStudentId() < 100000 || s.getStudentId() > 999999) return false;
-        if (s.getName() == null || s.getName().isEmpty()) return false;
-        if (s.getGpa() < 0 || s.getGpa() > 4) return false;
-        if (s.getMajor() == null || s.getMajor().getMajorName().isEmpty()) return false;
-        if (s.getYear() == null || s.getYear().isEmpty()) return false;
-        return true;
-    }
-
-    
-    // Main للتجربة مع Threads
-    public static void main(String[] args) {
-        StudentManager studentManager = new StudentManager();
-
-        // Thread لطباعة كل الطلاب
-        Thread printThread = new Thread(() -> {
-            studentManager.printAllStudent();
-        });
-
-        // Thread لإضافة طالب جديد
-        Thread addThread = new Thread(() -> {
-            Student s = new Student("Ali", 20, 12345, 123456, new Major("CS101", "CS"), 3.5, "Sophomore");
-            studentManager.addStudent(s);
-        });
-
-        // تشغيل الThreads
-        printThread.start();
-        addThread.start();
-    }
-
-}}
+}

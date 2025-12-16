@@ -1,5 +1,5 @@
 
-public class Person  {
+
 
 import java.io.Serializable; // Necessary import for the Serializable interface
 
