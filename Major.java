@@ -21,7 +21,7 @@ public class Major implements Serializable {
 
     public void setMajorCode(String code) {
         if (code == null || code.isEmpty()) {
-            majorCode = "UNK";
+            this.majorCode = "Unknown";
         } else {
             majorCode = code.toUpperCase();
         }
