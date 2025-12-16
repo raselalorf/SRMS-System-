@@ -1,3 +1,4 @@
+
 import java.io.Serializable; // Necessary import for the Serializable interface
 
 public class Person implements Serializable { // Parent class must implement Serializable for Student to inherit file saving ability

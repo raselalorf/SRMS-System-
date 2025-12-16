@@ -1,16 +1,8 @@
 import java.util.ArrayList;
 
 public class StudentManager {
-// Changed initialization. The list will be populated by the file handler now.
-    private ArrayList<Student> students; 
-    // Modified the constructor to load data on startup.
-    public StudentManager() {
-        // Load existing records when the manager is created. If the file is not found, an empty list is returned.
 
-
-    
-        this.students = StudentFileHandler.loadRecords() ;}
-
+    private ArrayList<Student> students = new ArrayList<>();
 
     // Add student
     public void addStudent(Student s) {
@@ -118,13 +110,10 @@ public class StudentManager {
 
     // Validate student data
     private boolean validateStudent(Student s) {
-
-        if (s.getStudentId() < 100000 ||  s.getStudentId() > 999999) return false;
-        if (s.getName() == null || s.getName().isEmpty()) return false;
-        if (s.getStudentId() < 100000 || s.getStudentId() > 999999) return false;
-        if (s.getName() == null||  s.getName().isEmpty()) return false;
-        if (s.getGpa() < 0  ||s.getGpa() > 4) return false;
-        if (s.getMajor() == null || s.getMajor().getMajorName().isEmpty()) return false;
+        if (s.getStudentId() < 100000  s.getStudentId() > 999999) return false;
+        if (s.getName() == null  s.getName().isEmpty()) return false;
+        if (s.getGpa() < 0  s.getGpa() > 4) return false;
+        if (s.getMajor() == null  s.getMajor().getMajorName().isEmpty()) return false;
         if (s.getYear() == null || s.getYear().isEmpty()) return false;
 
         return true;
