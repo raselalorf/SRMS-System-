@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -21,57 +22,53 @@ public class StudentFileHandler {
     /**
      * Saves the entire ArrayList of Student objects to a file using Serialization.
      * @param students The list of students to be saved.
+     * @throws IOException إذا حدث خطأ أثناء الكتابة على الملف.
      */
-    public static void saveRecords(ArrayList<Student> students) {
-        // We use try-with-resources: this automatically closes file streams, which is safer
+    public static void saveRecords(List<Student> students) throws IOException { // 👈 تم إضافة 'throws IOException'
+        
         try (
-            // FileOutputStream connects the program to the physical file
             FileOutputStream fileOut = new FileOutputStream(FILE_NAME);
-            // ObjectOutputStream prepares Java objects to be written as a stream of bytes
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)
         ) {
-            objectOut.writeObject(students); // Save the entire list of objects
+            objectOut.writeObject(students); 
             System.out.println("Success: Student records saved to " + FILE_NAME);
 
         } catch (IOException e) {
-            // [EXCEPTION HANDLING]: Catch errors during file writing (e.g., permissions, disk error)
-            System.err.println("Error saving records: An I/O error occurred.");
+            // [EXCEPTION HANDLING]: طباعة الخطأ قبل إلقائه يسمح بتسجيله هنا
+            System.err.println("Error saving records: An I/O error occurred during serialization.");
             System.err.println("Details: " + e.getMessage());
+            // إعادة إلقاء الاستثناء ليتم التقاطه بواسطة الكلاس الذي يستدعيه (مثل AutoSaveThread)
+            throw e; 
         }
     }
 
     // --- LOAD METHOD ---
+    // تم إبقاء loadRecords كما هي لأنها تتعامل مع الأخطاء داخلياً وترجع قائمة فارغة عند الفشل
     /**
      * Loads the entire ArrayList of Student objects from the file using Deserialization.
      * @return The list of students loaded from the file, or an empty list if loading fails.
      */
-    @SuppressWarnings("unchecked") // This suppresses a technical warning when casting the loaded object
+    @SuppressWarnings("unchecked") 
     public static ArrayList<Student> loadRecords() {
         ArrayList<Student> students = new ArrayList<>();
 
         try (
-            // FileInputStream reads bytes from the file
             FileInputStream fileIn = new FileInputStream(FILE_NAME);
-            // ObjectInputStream converts bytes back into Java objects
             ObjectInputStream objectIn = new ObjectInputStream(fileIn)
         ) {
-            // Read the object and cast it back to the expected type
             students = (ArrayList<Student>) objectIn.readObject();
             System.out.println("Success: Student records loaded from " + FILE_NAME);
 
         } catch (FileNotFoundException e) {
-            // [EXCEPTION HANDLING]: CRITICAL for first run. If file doesn't exist, we start empty gracefully.
             System.out.println("Data file not found. Starting with an empty record list (First Run).");
             return new ArrayList<>(); 
 
         } catch (ClassNotFoundException e) {
-            // [EXCEPTION HANDLING]: Handles errors if the saved data structure doesn't match the current class structure.
             System.err.println("Error: Class definition mismatch. Cannot load old data format.");
             System.err.println("Details: " + e.getMessage());
             return new ArrayList<>();
 
         } catch (IOException e) {
-            // [EXCEPTION HANDLING]: Handles general read/corruption errors.
             System.err.println("Error loading records due to file corruption or I/O issues.");
             System.err.println("Details: " + e.getMessage());
             return new ArrayList<>();
