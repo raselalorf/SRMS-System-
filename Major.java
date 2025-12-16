@@ -1,4 +1,6 @@
-public class Major {
+import java.io.Serializable; // Necessary import for the Serializable interface
+
+public class Major implements Serializable { // We must implement Serializable so Major objects can be saved to file
     private String majorCode; 
     private String majorName; 
     // Constructor
@@ -24,7 +26,6 @@ public class Major {
             this.majorCode = code.toUpperCase();
         }
     }
-
     public void setMajorName(String name) {
         if (name == null  name.isEmpty()) {
             majorName = "Unknown Major";
