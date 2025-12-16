@@ -126,6 +126,9 @@ public class StudentManager {
     // Main للتجربة مع Threads
     public static void main(String[] args) {
         StudentManager studentManager = new StudentManager();
+       
+        AutoSaveThread autoSave = new AutoSaveThread(manager);
+        autoSave.start();
 
         // Thread لطباعة كل الطلاب
         Thread printThread = new Thread(() -> {
@@ -142,4 +145,8 @@ public class StudentManager {
         printThread.start();
         addThread.start();
     }
+    public java.util.List<Student> getAllStudents() {
+    return students;
+}
+
 }
